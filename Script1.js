@@ -89,8 +89,8 @@ var bins = [
 // Set of boxes to be packed in any order
 
 var unorderedContents = [
-	new Box(2, 1, 4, true),
-	new Box(5, 5, 1, true),
+	new Box(1, 1, 2, true),
+	new Box(5, 3, 1, true),
 	new Box(2, 1, 3),
 	new Box(4, 3, 3),
 	new Box(2, 2, 2),
@@ -224,14 +224,14 @@ function fitItem(item, vol) {
 
 
 function fillSpace(cont, vol) {
-
+	;
 	fittingItems = [];
 	nonFittingItems = [];
 
 	while (cont.length > 0) {
 
 		var x = cont[0];
-
+		console.log("fitting item " + x.length + ", " + x.width + ", " + x.height + ".")
 		if (fitItem(x, vol) == null) {
 			console.log(vol);
 			if (x.isUpright) {
@@ -375,6 +375,11 @@ function selectBin() {
 			tempFirst = allFirst[0];
 			leftOverFirst = allFirst[1];
 
+			while (tempFirst.length > 0) {
+					fitFirst.push(tempFirst[0]);
+					tempFirst.splice(0, 1);
+				}
+				
 
 			//	//making a note of where items sit in first layer
 			//	orderStacked.push([f-1,alreadyFit]);
@@ -386,6 +391,7 @@ function selectBin() {
 		}
 			if (fitFloor.length + fitFirst.length == contents.length) {
 				console.log("All items will fit in two layers in bin " + bins[0].length + ", " + bins[0].width + ", " + bins[0].height + ".");
+				console.log(fitFloor.length + " items will fit on the floor, " + fitFirst.length + " items will fit on first layer.")
 				return;
 		}
 
